@@ -22,4 +22,9 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint_score=$(pylint $(git ls-files '*.py') | tail -n2 | head -n1 | awk '{print $7}' | cut -d'/' -f1)
+        echo "Pylint score was $pylint_score"
+        if [ $(echo "$pylint_score > 9" | bc) -ne 1 ]; then
+          echo "Pylint score less than 9, failing the build"
+          exit 1
+        fi
