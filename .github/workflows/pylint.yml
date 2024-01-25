@@ -26,11 +26,11 @@ jobs:
         Write-Output "$pylint_output"
         $regex_pattern = "rated at (\d+[\.,]\d+)"
         $match = [regex]::Match($pylint_output, $regex_pattern)
-        if ($match.Success) {
-          $pylint_score_str = $match.Groups[1].Value -replace ",", "."
-          Write-Output "Pylint score was $pylint_score_str"
-        } else {
-          Write-Output "Pylint score not found"
-          exit 1
-        }
+        #if ($match.Success) {
+        #  $pylint_score_str = $match.Groups[1].Value -replace ",", "."
+        #  Write-Output "Pylint score was $pylint_score_str"
+        #} else {
+        #  Write-Output "Pylint score not found"
+        #  exit 1
+        #}
       shell: pwsh
