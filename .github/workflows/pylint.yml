@@ -22,12 +22,12 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint_output=$(pylint $(git ls-files '*.py'))
-        echo "$pylint_output"
-        pylint_score=$(echo "$pylint_output" | python -c "import sys; [sys.stdout.write(line.split()[-1].split('/')[0]) for line in sys.stdin if 'rated at' in line]")
-        echo "Pylint score was $pylint_score"
-        if [[ "$pylint_score" < "9.00" ]]; then
-          echo "Pylint score less than 9, failing the build"
+        $pylint_output = pylint $(git ls-files '*.py')
+        Write-Output "$pylint_output"
+        $pylint_score = [regex]::Match($pylint_output, "rated at (\d+\.\d+)\/10\.00").Groups[1].Value
+        Write-Output "Pylint score was $pylint_score"
+        if ([decimal]$pylint_score -lt 9.00) {
+          Write-Output "Pylint score less than 9, failing the build"
           exit 1
-        fi
-      shell: bash
+        }
+      shell: pwsh
