@@ -27,9 +27,10 @@ jobs:
         $regex_pattern = "rated at (\d+\.\d+)"
         $match = [regex]::Match($pylint_output, $regex_pattern)
         if ($match.Success) {
-          $pylint_score = [decimal]$match.Groups[1].Value * 100
-          Write-Output "Pylint score was $($pylint_score / 100)"
-          if ($pylint_score -lt 900) {
+          $pylint_score = [decimal]$match.Groups[1].Value
+          Write-Output "Pylint score was $pylint_score"
+          $threshold = [decimal]9.00
+          if ($pylint_score -lt $threshold) {
             Write-Output "Pylint score less than 9, failing the build"
             exit 1
           }
