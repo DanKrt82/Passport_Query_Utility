@@ -7,7 +7,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.8", "3.9", "3.10"]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -24,7 +24,7 @@ jobs:
       run: |
         $pylint_output = pylint $(git ls-files '*.py')
         Write-Output "$pylint_output"
-        $regex_pattern = "rated at (\d+\.\d+)\/10\.00"
+        $regex_pattern = "rated at (\d+\.\d+)"
         $match = [regex]::Match($pylint_output, $regex_pattern)
         if ($match.Success) {
           $pylint_score = $match.Groups[1].Value
