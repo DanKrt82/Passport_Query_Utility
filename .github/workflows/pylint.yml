@@ -29,10 +29,6 @@ jobs:
         if ($match.Success) {
           $pylint_score_str = $match.Groups[1].Value -replace ",", "."
           Write-Output "Pylint score was $pylint_score_str"
-          #if ([double]$pylint_score_str -lt 9.0) {
-          #  Write-Output "Pylint score less than 9, failing the build"
-          #  exit 1
-          }
         } else {
           Write-Output "Pylint score not found"
           exit 1
