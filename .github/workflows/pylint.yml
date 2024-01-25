@@ -28,9 +28,9 @@ jobs:
         $match = [regex]::Match($pylint_output, $regex_pattern)
         if ($match.Success) {
           $pylint_score_str = $match.Groups[1].Value -replace ",", "."
-          $pylint_score = [decimal]$pylint_score_str
+          $pylint_score = [float]$pylint_score_str
           Write-Output "Pylint score was $pylint_score"
-          $threshold = [decimal]9.00
+          $threshold = [float]9.00
           if ($pylint_score -lt $threshold) {
             Write-Output "Pylint score less than 9, failing the build"
             exit 1
