@@ -24,4 +24,3 @@ urllib3==2.1.0
 webdriver-manager==4.0.1
 wheel==0.41.2
 wsproto==1.2.0
-winsound
