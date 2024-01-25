@@ -24,6 +24,10 @@ jobs:
       run: |
         pylint_output=$(pylint $(git ls-files '*.py'))
         echo "$pylint_output"
-        pylint_score=$(echo "$pylint_output" | grep "Your code has been rated at" | awk '{print $7}' | cut -d'/' -f1)
+        pylint_score=$(echo "$pylint_output" | python -c "import sys; [sys.stdout.write(line.split()[-1].split('/')[0]) for line in sys.stdin if 'rated at' in line]")
         echo "Pylint score was $pylint_score"
+        if [[ "$pylint_score" < "9.00" ]]; then
+          echo "Pylint score less than 9, failing the build"
+          exit 1
+        fi
       shell: bash
