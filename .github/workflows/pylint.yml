@@ -20,10 +20,10 @@ jobs:
         pip install selenium webdriver_manager
         pip install -r requirements.txt
         pip install pylint
-#    - name: Analysing the code with pylint
-#      run: |
-#        pylint_output=$(pylint $(git ls-files '*.py'))
-#        echo "$pylint_output"
-#        pylint_score=$(echo "$pylint_output" | grep "Your code has been rated at" | awk '{print $7}' | cut -d'/' -f1)
-#        echo "Pylint score was $pylint_score"
-#      shell: bash
+    - name: Analysing the code with pylint
+      run: |
+        pylint_output=$(pylint $(git ls-files '*.py'))
+        echo "$pylint_output"
+        pylint_score=$(echo "$pylint_output" | grep "Your code has been rated at" | awk '{print $7}' | cut -d'/' -f1)
+        echo "Pylint score was $pylint_score"
+      shell: bash
