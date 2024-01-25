@@ -24,10 +24,11 @@ jobs:
       run: |
         $pylint_output = pylint $(git ls-files '*.py')
         Write-Output "$pylint_output"
-        $regex_pattern = "rated at (\d+\.\d+)"
+        $regex_pattern = "rated at (\d+[\.,]\d+)"
         $match = [regex]::Match($pylint_output, $regex_pattern)
         if ($match.Success) {
-          $pylint_score = [decimal]$match.Groups[1].Value
+          $pylint_score_str = $match.Groups[1].Value -replace ",", "."
+          $pylint_score = [decimal]$pylint_score_str
           Write-Output "Pylint score was $pylint_score"
           $threshold = [decimal]9.00
           if ($pylint_score -lt $threshold) {
